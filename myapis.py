@@ -16,7 +16,6 @@ search_url = "https://api.twitter.com/2/tweets/search/recent"
 
 # Optional params: start_time,end_time,since_id,until_id,max_results,next_token,
 # expansions,tweet.fields,media.fields,poll.fields,place.fields,user.fields
-query_params = {'query': 'Green Hydrogen','expansions':'author_id','tweet.fields': 'author_id,created_at,source','user.fields':'description'}
 
 def bearer_oauth(r):
     """
@@ -36,9 +35,10 @@ def connect_to_endpoint(url, params):
 
 app = FastAPI()
 
-@app.get("/cheena")
-def index():
-    r = requests.get("https://gnews.io/api/v4/search?q={0}&token=575c38a2882fcb51d4d9b116640e890e&from=2022-02-01T00:00:00Z".format("Green Hydrogen"))
+@app.get("/news")
+def index(search):
+    print(search)
+    r = requests.get("https://gnews.io/api/v4/search?q={0}&token=575c38a2882fcb51d4d9b116640e890e&from=2022-02-01T00:00:00Z".format(search))
     myjson = json.loads(r.text)
     mylist = myjson["articles"]
     title = []
@@ -59,6 +59,7 @@ def index():
         # label.append('')
         # score.append('')
 
+    query_params = {'query': search,'expansions':'author_id','tweet.fields': 'author_id,created_at,source','user.fields':'description'}
     
     json_response = connect_to_endpoint(search_url, query_params)
     tweet_data = json_response["data"]
@@ -73,10 +74,10 @@ def index():
         
     t = {'Date of News/Tweet':publish,'Tweet content/news headline':title,'source of news / person name who has tweeted':url,"Predicted Sentimental Label":label,"Predicted Sentimental Score":score}
     df = pd.DataFrame(t)
-    df.to_csv("Cheena_News.csv")
-    file_path = "Cheena_News.csv"
+    df.to_csv("{0}_News.csv".format(search))
+    file_path = "{0}_News.csv".format(search)
     if os.path.exists(file_path):
-        return FileResponse(file_path, media_type="text/csv", filename="Cheena_csv.csv")
+        return FileResponse(file_path, media_type="text/csv", filename="{0}_News.csv".format(search))
     return {"error" : "File not found!"}
 
 
