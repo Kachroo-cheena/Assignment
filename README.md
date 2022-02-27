@@ -6,6 +6,13 @@ Working FastAPI fetch Latest news from google news/twitters also adding sentimen
 
 hypercorn myapis:app --reload
 
+# How to Use
+Run http://127.0.0.1:8000/news?search=ENTER_QUERY_HERE
+
+Example: 
+1. http://127.0.0.1:8000/news?search=Green Hydrogen
+2. http://127.0.0.1:8000/news?search=Modi
+
 # API Response
 
 Reponse will the .csv file containing 5 columnns
