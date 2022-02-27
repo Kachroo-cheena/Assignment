@@ -4,3 +4,4 @@ pandas==1.4.1
 jsonschema==4.4.0
 requests==2.27.1
 hypercorn==0.13.2
+torch==1.10.2
