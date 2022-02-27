@@ -10,7 +10,7 @@ hypercorn myapis:app --reload
 Run http://127.0.0.1:8000/news?search=ENTER_QUERY_HERE
 
 Example: 
-1. http://127.0.0.1:8000/news?search=Green Hydrogen
+1. http://127.0.0.1:8000/news?search=Green%20Hydrogen
 2. http://127.0.0.1:8000/news?search=Modi
 
 # API Response
